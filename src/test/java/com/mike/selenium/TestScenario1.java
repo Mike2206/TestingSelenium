@@ -6,13 +6,12 @@ import org.testng.Assert;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
-
 import java.util.concurrent.TimeUnit;
 
 public class TestScenario1 {
     //Variables
-    public String url;
-    WebDriver driver = new FirefoxDriver();
+    private String url;
+    private WebDriver driver = new FirefoxDriver();
 
     @BeforeSuite
     public void startWebdriver() {
@@ -30,7 +29,7 @@ public class TestScenario1 {
 
     @Test(priority = 1)
     public void Test1(){
-        driver.navigate().to("url");
+        driver.get(url);
         Assert.assertTrue(driver.getTitle().contains("My Store"));
     }
 
