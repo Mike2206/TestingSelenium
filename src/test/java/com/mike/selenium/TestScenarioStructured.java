@@ -11,12 +11,13 @@ import java.util.concurrent.TimeUnit;
 public class TestScenarioStructured {
     //Variables
     private String url;
-    private WebDriver driver = new FirefoxDriver();
+    private static WebDriver driver;
 
     @BeforeSuite
     public void startWebdriver() {
         url = "http://automationpractice.com/index.php?";
         System.setProperty("webdriver.gecko.driver", "C:\\WebDrivers\\geckodriver.exe");
+        driver = new FirefoxDriver();
         driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
         driver.manage().window().maximize();
     }
