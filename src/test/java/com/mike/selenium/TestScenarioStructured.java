@@ -8,7 +8,7 @@ import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
 import java.util.concurrent.TimeUnit;
 
-public class TestScenario1 {
+public class TestScenarioStructured {
     //Variables
     private String url;
     private WebDriver driver = new FirefoxDriver();

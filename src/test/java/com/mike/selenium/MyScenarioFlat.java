@@ -8,7 +8,7 @@ import org.testng.annotations.Test;
 
 import java.util.concurrent.TimeUnit;
 
-public class MyScenario {
+public class MyScenarioFlat {
 
     @Test
     public void startWebdriver() {
