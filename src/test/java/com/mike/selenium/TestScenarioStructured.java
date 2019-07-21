@@ -61,6 +61,7 @@ public class TestScenarioStructured {
     @Test(priority = 5)
     public void ChoosingSizeM(){
         driver.findElement(By.xpath("//*[@id=\"layered_id_attribute_group_2\"]")).click();
+        Assert.assertTrue(driver.findElement(By.xpath("//*[@id=\"layered_id_attribute_group_2\"]")).isSelected());
     }
 
 }
