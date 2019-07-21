@@ -39,13 +39,28 @@ public class TestScenarioStructured {
     }
 
     @Test(priority = 2)
-    public void FindWebElemtns(){
+    public void FindWebElements(){
         List<WebElement> elements = driver.findElements(new By.ByXPath(".//*[@id=\"block_top_menu\"]"));
         for (WebElement allLinks:elements){
             allLinks.getText();
             System.out.println(allLinks.getText());
-
         }
-
     }
+    @Test(priority = 3)
+    public void CountingWebElements(){
+        int CountElements = driver.findElements(new By.ByXPath(".//*[@id=\"block_top_menu\"]")).size();
+        System.out.println(CountElements);
+    }
+
+    @Test(priority = 4)
+    public void GoingToWomen(){
+        driver.findElement(By.xpath("//*[@id=\"block_top_menu\"]/ul/li[1]/a")).click();
+        Assert.assertTrue(driver.getTitle().contains("Women - My Store"));
+    }
+
+    @Test(priority = 5)
+    public void ChoosingSizeM(){
+        driver.findElement(By.xpath("//*[@id=\"layered_id_attribute_group_2\"]")).click();
+    }
+
 }
