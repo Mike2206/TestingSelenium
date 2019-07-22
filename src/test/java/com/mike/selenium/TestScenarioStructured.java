@@ -48,7 +48,7 @@ public class TestScenarioStructured {
     }
     @Test(priority = 3)
     public void CountingWebElements(){
-        int CountElements = driver.findElements(new By.ByXPath(".//*[@id=\"block_top_menu\"]")).size();
+        int CountElements = driver.findElements(new By.ByXPath(".//*[@id=\"block_top_menu\"]/ul/li")).size();
         System.out.println(CountElements);
     }
 
