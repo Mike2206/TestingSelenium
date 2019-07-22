@@ -19,9 +19,10 @@ public class TestScenarioStructured {
 
     @BeforeSuite
     public void startWebdriver() {
-        url = "http://automationpractice.com/index.php?";
+        url = "http://automationpractice.com";
         System.setProperty("webdriver.gecko.driver", "C:\\WebDrivers\\geckodriver.exe");
         driver = new FirefoxDriver();
+        driver.get(url);
         driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
         driver.manage().window().maximize();
     }
@@ -34,7 +35,6 @@ public class TestScenarioStructured {
 
     @Test(priority = 1)
     public void CheckTittle(){
-        driver.get(url);
         Assert.assertTrue(driver.getTitle().contains("My Store"));
     }
 
