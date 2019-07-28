@@ -77,6 +77,8 @@ public class TestScenarioStructured {
         driver.navigate().back();
         driver.findElement(By.xpath("//*[@id=\"block_top_menu\"]/ul/li[3]/a")).click();
         Assert.assertTrue(driver.getTitle().contains("T-shirts - My Store"));
+        js.executeScript("window.scrollTo(0,200)");
+
     }
 
 }
