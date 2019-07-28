@@ -1,6 +1,7 @@
 package com.mike.selenium;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -16,6 +17,7 @@ public class TestScenarioStructured {
     //Variables
     private String url;
     private static WebDriver driver;
+    JavascriptExecutor js = (JavascriptExecutor) driver;
 
     @BeforeSuite
     public void startWebdriver() {
@@ -68,6 +70,13 @@ public class TestScenarioStructured {
     public void ChoosingSizeM(){
         driver.findElement(By.xpath("//*[@id=\"layered_id_attribute_group_2\"]")).click();
         Assert.assertTrue(driver.findElement(By.xpath("//*[@id=\"layered_id_attribute_group_2\"]")).isSelected());
+    }
+
+    @Test(priority = 7)
+    public void GoToTShirts(){
+        driver.navigate().back();
+        driver.findElement(By.xpath("//*[@id=\"block_top_menu\"]/ul/li[3]/a")).click();
+        Assert.assertTrue(driver.getTitle().contains("T-shirts - My Store"));
     }
 
 }
