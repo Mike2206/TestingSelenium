@@ -19,9 +19,9 @@ public class TestScenarioStructured {
 
     @BeforeSuite
     public void startWebdriver() {
-        url = "http://automationpractice.com";
         System.setProperty("webdriver.gecko.driver", "C:\\WebDrivers\\geckodriver.exe");
         driver = new FirefoxDriver();
+        url = "http://automationpractice.com";
         driver.get(url);
         driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
         driver.manage().window().maximize();
@@ -39,6 +39,11 @@ public class TestScenarioStructured {
     }
 
     @Test(priority = 2)
+    public void CheckTheLogo(){
+        Assert.assertTrue(driver.findElement(By.id("header_logo")).isDisplayed());
+    }
+
+    @Test(priority = 3)
     public void FindWebElements(){
         List<WebElement> elements = driver.findElements(new By.ByXPath(".//*[@id=\"block_top_menu\"]"));
         for (WebElement allLinks:elements){
@@ -46,19 +51,20 @@ public class TestScenarioStructured {
             System.out.println(allLinks.getText());
         }
     }
-    @Test(priority = 3)
+
+    @Test(priority = 4)
     public void CountingWebElements(){
         int CountElements = driver.findElements(new By.ByXPath(".//*[@id=\"block_top_menu\"]/ul/li")).size();
         System.out.println(CountElements);
     }
 
-    @Test(priority = 4)
+    @Test(priority = 5)
     public void GoingToWomen(){
         driver.findElement(By.xpath("//*[@id=\"block_top_menu\"]/ul/li[1]/a")).click();
         Assert.assertTrue(driver.getTitle().contains("Women - My Store"));
     }
 
-    @Test(priority = 5)
+    @Test(priority = 6)
     public void ChoosingSizeM(){
         driver.findElement(By.xpath("//*[@id=\"layered_id_attribute_group_2\"]")).click();
         Assert.assertTrue(driver.findElement(By.xpath("//*[@id=\"layered_id_attribute_group_2\"]")).isSelected());
