@@ -17,7 +17,7 @@ public class TestScenarioStructured {
     //Variables
     private String url;
     private static WebDriver driver;
-    JavascriptExecutor js = (JavascriptExecutor) driver;
+    private static JavascriptExecutor js;
 
     @BeforeSuite
     public void startWebdriver() {
@@ -27,12 +27,13 @@ public class TestScenarioStructured {
         driver.get(url);
         driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
         driver.manage().window().maximize();
+        js = (JavascriptExecutor) driver;
     }
 
     @AfterSuite
     public void tearDown(){
         driver.manage().deleteAllCookies();
-        driver.close();
+        //driver.close();
     }
 
     @Test(priority = 1)
@@ -77,8 +78,23 @@ public class TestScenarioStructured {
         driver.navigate().back();
         driver.findElement(By.xpath("//*[@id=\"block_top_menu\"]/ul/li[3]/a")).click();
         Assert.assertTrue(driver.getTitle().contains("T-shirts - My Store"));
-        js.executeScript("window.scrollTo(0,200)");
+    }
 
+    @Test(priority = 8)
+    public void CheckThePriceAndName(){
+        WebElement prize = driver.findElement(By.cssSelector("#center_column > ul > li > div > div.right-block > div.content_price > span"));
+        WebElement name = driver.findElement(By.cssSelector("#center_column > ul > li > div > div.right-block > h5 > a"));
+        prize.getText();
+        name.getText();
+        System.out.println(name.getText());
+        System.out.println(prize.getText());
+    }
+
+    @Test(priority = 9)
+    public void AddingProductToCart(){
+        driver.findElement(By.xpath("//*[@id=\"center_column\"]/ul/li/div/div[2]/div[2]/a[2]/span")).click();
+        Assert.assertTrue(driver.findElement(By.cssSelector("#layer_cart > div.clearfix")).isDisplayed());
+        js.executeScript("window.scrollTo(0,200)");
     }
 
 }
