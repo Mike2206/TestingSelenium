@@ -5,6 +5,7 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.interactions.Actions;
 import org.testng.Assert;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
@@ -92,9 +93,14 @@ public class TestScenarioStructured {
 
     @Test(priority = 9)
     public void AddingProductToCart(){
-        driver.findElement(By.xpath("//*[@id=\"center_column\"]/ul/li/div/div[2]/div[2]/a[2]/span")).click();
-        Assert.assertTrue(driver.findElement(By.cssSelector("#layer_cart > div.clearfix")).isDisplayed());
-        js.executeScript("window.scrollTo(0,200)");
+        js.executeScript("window.scrollTo(0,500)");
+        WebElement cart = driver.findElement(By.cssSelector("#center_column > ul > li > div > div.left-block > div > a.product_img_link > img"));
+        Actions builder = new Actions(driver);
+        builder.moveToElement(cart);
+        builder.build().perform();
+        driver.findElement(By.xpath("//*[@id=\"center_column\"]/ul/li/div/div[2]/div[2]/a[1]")).click();
+        Assert.assertTrue(driver.findElement(By.xpath("//*[@id=\"layer_cart\"]/div[1]/div[1]")).isDisplayed());
+
     }
 
 }
