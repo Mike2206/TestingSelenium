@@ -97,10 +97,20 @@ public class TestScenarioStructured {
         WebElement cart = driver.findElement(By.cssSelector("#center_column > ul > li > div > div.left-block > div > a.product_img_link > img"));
         Actions builder = new Actions(driver);
         builder.moveToElement(cart);
-        builder.build().perform();
+        builder.perform();
         driver.findElement(By.xpath("//*[@id=\"center_column\"]/ul/li/div/div[2]/div[2]/a[1]")).click();
-        Assert.assertTrue(driver.findElement(By.xpath("//*[@id=\"layer_cart\"]/div[1]/div[1]")).isDisplayed());
+        Assert.assertTrue(driver.getPageSource().contains("Product successfully added to your shopping cart"));
+        if (){
+            Assert.assertTrue(driver.getPageSource().contains("There is 1 item in your cart"));
+        } else {
+            System.out.println("There are 2 items in your cart");
+        }
 
+    }
+    @Test(priority = 10)
+    public void CheckingIfProductIsAdded(){
+        driver.findElement(By.xpath("/html/body/div/div[1]/header/div[3]/div/div/div[4]/div[1]/div[2]/div[4]/span")).click();
+        js.executeScript("window.scrollTo(0,-500)");
     }
 
 }
