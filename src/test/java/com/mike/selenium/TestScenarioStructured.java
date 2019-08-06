@@ -103,9 +103,8 @@ public class TestScenarioStructured {
         builder.perform();
         driver.findElement(By.xpath("//*[@id=\"center_column\"]/ul/li/div/div[2]/div[2]/a[1]")).click();
         Assert.assertTrue(driver.getPageSource().contains("Product successfully added to your shopping cart"));
-        boolean item = true;
+        boolean item = driver.getPageSource().contains("There is 1 item in your cart.");
         if (item){
-            item = driver.getPageSource().contains("There is 1 item in your cart.");
             System.out.println("There is just 1 product in your cart");
         } else {
             System.out.println("There are 2 or more items in your cart");
@@ -128,6 +127,7 @@ public class TestScenarioStructured {
     @Test(priority = 11)
     public void ProceedToCheckout(){
         driver.findElement(By.xpath("//*[@id=\"button_order_cart\"]/span")).click();
+        Assert.assertTrue(driver.getPageSource().contains("Shopping-cart summary"));
     }
 
 }
