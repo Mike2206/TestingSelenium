@@ -6,6 +6,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
@@ -19,9 +21,10 @@ public class TestScenarioStructured {
     private String url;
     private static WebDriver driver;
     private static JavascriptExecutor js;
+    private static ExpectedConditions cond;
 
     @BeforeSuite
-    public void startWebdriver() {
+    public void startWebDriver() {
         System.setProperty("webdriver.gecko.driver", "C:\\WebDrivers\\geckodriver.exe");
         driver = new FirefoxDriver();
         url = "http://automationpractice.com";
@@ -100,17 +103,31 @@ public class TestScenarioStructured {
         builder.perform();
         driver.findElement(By.xpath("//*[@id=\"center_column\"]/ul/li/div/div[2]/div[2]/a[1]")).click();
         Assert.assertTrue(driver.getPageSource().contains("Product successfully added to your shopping cart"));
-        if (){
-            Assert.assertTrue(driver.getPageSource().contains("There is 1 item in your cart"));
+        boolean item = true;
+        if (item){
+            item = driver.getPageSource().contains("There is 1 item in your cart.");
+            System.out.println("There is just 1 product in your cart");
         } else {
-            System.out.println("There are 2 items in your cart");
+            System.out.println("There are 2 or more items in your cart");
         }
 
     }
+
     @Test(priority = 10)
     public void CheckingIfProductIsAdded(){
-        driver.findElement(By.xpath("/html/body/div/div[1]/header/div[3]/div/div/div[4]/div[1]/div[2]/div[4]/span")).click();
+        WebDriverWait wait = new WebDriverWait(driver,10);
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"layer_cart\"]/div[1]/div[2]/div[4]/span/span"))).click();
         js.executeScript("window.scrollTo(0,-500)");
+        WebElement bar = driver.findElement(By.xpath("//*[@id=\"header\"]/div[3]/div/div/div[3]/div/a"));
+        Actions builder = new Actions(driver);
+        builder.moveToElement(bar);
+        builder.perform();
+        Assert.assertTrue(driver.getPageSource().contains("Faded Short"));
+    }
+
+    @Test(priority = 11)
+    public void ProceedToCheckout(){
+        driver.findElement(By.xpath("//*[@id=\"button_order_cart\"]/span")).click();
     }
 
 }
