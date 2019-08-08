@@ -127,7 +127,20 @@ public class TestScenarioStructured {
     @Test(priority = 11)
     public void ProceedToCheckout(){
         driver.findElement(By.xpath("//*[@id=\"button_order_cart\"]/span")).click();
-        Assert.assertTrue(driver.getPageSource().contains("Shopping-cart summary"));
+        WebDriverWait wait = new WebDriverWait(driver,10);
+        wait.until(ExpectedConditions.textToBePresentInElementLocated(By.xpath("//*[@id=\"cart_title\"]"), "SHOPPING-CART SUMMARY"));
+        js.executeScript("window.scrollTo(0,500)");
+        driver.findElement(By.xpath("/html/body/div/div[2]/div/div[3]/div/p[2]/a[1]")).click();
+    }
+
+    @Test(priority = 12)
+    public void SearchForDress(){
+        WebElement searchbar = driver.findElement(By.xpath("//*[@id=\"search_query_top\"]"));
+        searchbar.clear();
+        searchbar.sendKeys("Printed Dress");
+        driver.findElement(By.xpath("/html/body/div/div[1]/header/div[3]/div/div/div[2]/form/button")).click();
+        driver.findElement(By.xpath("/html/body/div/div[1]/header/div[3]/div/div/div[6]/ul/li[2]/a")).click();
+        Assert.assertTrue(driver.getTitle().contains("Dresses - My Store"));
     }
 
 }
