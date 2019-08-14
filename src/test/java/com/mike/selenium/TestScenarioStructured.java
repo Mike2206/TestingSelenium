@@ -1,48 +1,54 @@
 package com.mike.selenium;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
 
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
-public class TestScenarioStructured {
-    //Variables
-    private String url;
-    private static WebDriver driver;
-    private static JavascriptExecutor js;
-    private static ExpectedConditions cond;
+public class TestScenarioStructured extends initial{
+    initial initial;
+    TestScenarioStructuredMethods TestScenarioStructuredMethods;
+    private Actions builder;
+
+/*public class PageFactory extends initial{
+
+    pagefactory pagefactory;
+
+    @FindBy(xpath = "//*[@id=\"header\"]/div[3]/div/div/div[3]/div/a")
+    WebElement icon;
+
+    public void initElements(driver, this) {
+        pagefactory = new pagefactory();
+        PageFactory.initElements(driver, this);
+    }
+}*/
+
 
     @BeforeSuite
-    public void startWebDriver() {
-        System.setProperty("webdriver.gecko.driver", "C:\\WebDrivers\\geckodriver.exe");
-        driver = new FirefoxDriver();
-        url = "http://automationpractice.com";
-        driver.get(url);
-        driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
-        driver.manage().window().maximize();
-        js = (JavascriptExecutor) driver;
+    public void setUpBeforeTestClass() {
+      /*System.setProperty("webdriver.gecko.driver", "C:\\WebDrivers\\geckodriver.exe");
+        js = (JavascriptExecutor) driver;*/
+        initial = new initial();
+        TestScenarioStructuredMethods = new TestScenarioStructuredMethods();
+        initial.invokeBrowser();
+        builder = new Actions(driver);
     }
 
     @AfterSuite
     public void tearDown(){
         driver.manage().deleteAllCookies();
-        //driver.close();
+        driver.close();
     }
 
     @Test(priority = 1)
     public void CheckTittle(){
-        Assert.assertTrue(driver.getTitle().contains("My Store"));
+        Assert.assertTrue(TestScenarioStructuredMethods.test1());
     }
 
     @Test(priority = 2)
@@ -98,7 +104,6 @@ public class TestScenarioStructured {
     public void AddingProductToCart(){
         js.executeScript("window.scrollTo(0,500)");
         WebElement cart = driver.findElement(By.cssSelector("#center_column > ul > li > div > div.left-block > div > a.product_img_link > img"));
-        Actions builder = new Actions(driver);
         builder.moveToElement(cart);
         builder.perform();
         driver.findElement(By.xpath("//*[@id=\"center_column\"]/ul/li/div/div[2]/div[2]/a[1]")).click();
@@ -107,18 +112,16 @@ public class TestScenarioStructured {
         if (item){
             System.out.println("There is just 1 product in your cart");
         } else {
-            System.out.println("There are 2 or more items in your cart");
+            System.out.println("There are 2 or more products in your cart");
         }
 
     }
 
     @Test(priority = 10)
     public void CheckingIfProductIsAdded(){
-        WebDriverWait wait = new WebDriverWait(driver,10);
-        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"layer_cart\"]/div[1]/div[2]/div[4]/span/span"))).click();
+        gWait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"layer_cart\"]/div[1]/div[2]/div[4]/span/span"))).click();
         js.executeScript("window.scrollTo(0,-500)");
         WebElement bar = driver.findElement(By.xpath("//*[@id=\"header\"]/div[3]/div/div/div[3]/div/a"));
-        Actions builder = new Actions(driver);
         builder.moveToElement(bar);
         builder.perform();
         Assert.assertTrue(driver.getPageSource().contains("Faded Short"));
@@ -127,8 +130,7 @@ public class TestScenarioStructured {
     @Test(priority = 11)
     public void ProceedToCheckout(){
         driver.findElement(By.xpath("//*[@id=\"button_order_cart\"]/span")).click();
-        WebDriverWait wait = new WebDriverWait(driver,10);
-        wait.until(ExpectedConditions.textToBePresentInElementLocated(By.xpath("//*[@id=\"cart_title\"]"), "SHOPPING-CART SUMMARY"));
+        gWait.until(ExpectedConditions.textToBePresentInElementLocated(By.xpath("//*[@id=\"cart_title\"]"), "SHOPPING-CART SUMMARY"));
         js.executeScript("window.scrollTo(0,500)");
         driver.findElement(By.xpath("/html/body/div/div[2]/div/div[3]/div/p[2]/a[1]")).click();
     }
