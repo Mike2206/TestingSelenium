@@ -35,9 +35,11 @@ public class TestScenarioStructured extends initial{
       /*System.setProperty("webdriver.gecko.driver", "C:\\WebDrivers\\geckodriver.exe");
         js = (JavascriptExecutor) driver;*/
         initial = new initial();
-        TestScenarioStructuredMethods = new TestScenarioStructuredMethods();
         initial.invokeBrowser();
         builder = new Actions(driver);
+        // todo | nie dzialalo wczesniej ze wzgledu na kolejnosc, invokeBrowser byl wywolywany pozniej niz inicjacja
+        // todo | elementow PageFactory w klasie TestScenarioStructuredMethods
+        TestScenarioStructuredMethods = new TestScenarioStructuredMethods();
     }
 
     @AfterSuite
@@ -51,9 +53,12 @@ public class TestScenarioStructured extends initial{
         Assert.assertTrue(TestScenarioStructuredMethods.test1());
     }
 
+    // todo | zakomentowalem stara wersje, po nowemu masz opisane w docelowych metodach
     @Test(priority = 2)
     public void CheckTheLogo(){
-        Assert.assertTrue(driver.findElement(By.id("header_logo")).isDisplayed());
+        // todo | wykonana jest asercja ze zwroceniem biznesowego komunikatu bledu zamiast tylko expected true, actual false
+        Assert.assertTrue(TestScenarioStructuredMethods.checkTheLogo(),"Logo not found");
+      //  Assert.assertTrue(driver.findElement(By.id("header_logo")).isDisplayed());
     }
 
     @Test(priority = 3)
