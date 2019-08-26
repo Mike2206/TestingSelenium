@@ -16,29 +16,11 @@ public class TestScenarioStructured extends initial{
     TestScenarioStructuredMethods TestScenarioStructuredMethods;
     private Actions builder;
 
-/*public class PageFactory extends initial{
-
-    pagefactory pagefactory;
-
-    @FindBy(xpath = "//*[@id=\"header\"]/div[3]/div/div/div[3]/div/a")
-    WebElement icon;
-
-    public void initElements(driver, this) {
-        pagefactory = new pagefactory();
-        PageFactory.initElements(driver, this);
-    }
-}*/
-
-
     @BeforeSuite
     public void setUpBeforeTestClass() {
-      /*System.setProperty("webdriver.gecko.driver", "C:\\WebDrivers\\geckodriver.exe");
-        js = (JavascriptExecutor) driver;*/
         initial = new initial();
         initial.invokeBrowser();
         builder = new Actions(driver);
-        // todo | nie dzialalo wczesniej ze wzgledu na kolejnosc, invokeBrowser byl wywolywany pozniej niz inicjacja
-        // todo | elementow PageFactory w klasie TestScenarioStructuredMethods
         TestScenarioStructuredMethods = new TestScenarioStructuredMethods();
     }
 
@@ -53,12 +35,9 @@ public class TestScenarioStructured extends initial{
         Assert.assertTrue(TestScenarioStructuredMethods.test1());
     }
 
-    // todo | zakomentowalem stara wersje, po nowemu masz opisane w docelowych metodach
     @Test(priority = 2)
     public void CheckTheLogo(){
-        // todo | wykonana jest asercja ze zwroceniem biznesowego komunikatu bledu zamiast tylko expected true, actual false
         Assert.assertTrue(TestScenarioStructuredMethods.checkTheLogo(),"Logo not found");
-      //  Assert.assertTrue(driver.findElement(By.id("header_logo")).isDisplayed());
     }
 
     @Test(priority = 3)
@@ -108,8 +87,7 @@ public class TestScenarioStructured extends initial{
     @Test(priority = 9)
     public void AddingProductToCart(){
         js.executeScript("window.scrollTo(0,500)");
-        WebElement cart = driver.findElement(By.cssSelector("#center_column > ul > li > div > div.left-block > div > a.product_img_link > img"));
-        builder.moveToElement(cart);
+        builder.moveToElement(TestScenarioStructuredMethods.Cart);
         builder.perform();
         driver.findElement(By.xpath("//*[@id=\"center_column\"]/ul/li/div/div[2]/div[2]/a[1]")).click();
         Assert.assertTrue(driver.getPageSource().contains("Product successfully added to your shopping cart"));
@@ -119,22 +97,20 @@ public class TestScenarioStructured extends initial{
         } else {
             System.out.println("There are 2 or more products in your cart");
         }
-
     }
 
     @Test(priority = 10)
     public void CheckingIfProductIsAdded(){
         gWait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"layer_cart\"]/div[1]/div[2]/div[4]/span/span"))).click();
         js.executeScript("window.scrollTo(0,-500)");
-        WebElement bar = driver.findElement(By.xpath("//*[@id=\"header\"]/div[3]/div/div/div[3]/div/a"));
-        builder.moveToElement(bar);
+        builder.moveToElement(TestScenarioStructuredMethods.CartDropDown);
         builder.perform();
         Assert.assertTrue(driver.getPageSource().contains("Faded Short"));
     }
 
     @Test(priority = 11)
     public void ProceedToCheckout(){
-        driver.findElement(By.xpath("//*[@id=\"button_order_cart\"]/span")).click();
+        TestScenarioStructuredMethods.ButtonOrderCart.click();
         gWait.until(ExpectedConditions.textToBePresentInElementLocated(By.xpath("//*[@id=\"cart_title\"]"), "SHOPPING-CART SUMMARY"));
         js.executeScript("window.scrollTo(0,500)");
         driver.findElement(By.xpath("/html/body/div/div[2]/div/div[3]/div/p[2]/a[1]")).click();
@@ -142,12 +118,10 @@ public class TestScenarioStructured extends initial{
 
     @Test(priority = 12)
     public void SearchForDress(){
-        WebElement searchbar = driver.findElement(By.xpath("//*[@id=\"search_query_top\"]"));
-        searchbar.clear();
-        searchbar.sendKeys("Printed Dress");
-        driver.findElement(By.xpath("/html/body/div/div[1]/header/div[3]/div/div/div[2]/form/button")).click();
-        driver.findElement(By.xpath("/html/body/div/div[1]/header/div[3]/div/div/div[6]/ul/li[2]/a")).click();
+        TestScenarioStructuredMethods.SearchBar.clear();
+        TestScenarioStructuredMethods.SearchBar.sendKeys("Printed Dress");
+        TestScenarioStructuredMethods.SearchButton.click();
+        TestScenarioStructuredMethods.DressesCategory.click();
         Assert.assertTrue(driver.getTitle().contains("Dresses - My Store"));
     }
-
 }

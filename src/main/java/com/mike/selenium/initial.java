@@ -14,8 +14,6 @@ public class initial {
     public static JavascriptExecutor js;
 
     public static void invokeBrowser(){
-        /*File file = new File("C:\\WebDrivers\\geckodriver.exe");
-        System.setProperty("webdriver.gecko.driver", file.getAbsolutePath());*/
         String urlAddress = "http://automationpractice.com";
         System.setProperty("webdriver.gecko.driver", "C:\\WebDrivers\\geckodriver.exe");
         driver = new FirefoxDriver();
