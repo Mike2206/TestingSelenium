@@ -9,6 +9,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 public class TestScenarioStructuredMethods extends initial {
 
     public TestScenarioStructuredMethods() {
+
         PageFactory.initElements(driver,this);
     }
 
@@ -26,6 +27,22 @@ public class TestScenarioStructuredMethods extends initial {
     WebElement DressesCategory;
     @FindBy (css = "#center_column > ul > li > div > div.left-block > div > a.product_img_link > img")
     WebElement Cart;
+    @FindBy (xpath = "//*[@id=\"center_column\"]/ul/li/div/div[2]/div[2]/a[1]")
+    WebElement AddToCart;
+    @FindBy (xpath = "/html/body/div/div[2]/div/div[3]/div/p[2]/a[1]")
+    WebElement ProceedToCheckoutButton;
+    @FindBy (xpath = "//*[@id=\"layer_cart\"]/div[1]/div[2]/div[4]/span/span")
+    WebElement ContinueShoppingButton;
+    @FindBy (css = "#center_column > ul > li > div > div.right-block > div.content_price > span")
+    WebElement Prize;
+    @FindBy (css = "#center_column > ul > li > div > div.right-block > h5 > a")
+    WebElement Name;
+    @FindBy (xpath = "//*[@id=\"block_top_menu\"]/ul/li[3]/a")
+    WebElement TShirtButton;
+    @FindBy (xpath = "//*[@id=\"layered_id_attribute_group_2\"]")
+    WebElement SizeMCheckbox;
+    @FindBy (xpath = "//*[@id=\"block_top_menu\"]/ul/li[1]/a")
+    WebElement WomenCategoryButton;
 
 
     public boolean test1() {

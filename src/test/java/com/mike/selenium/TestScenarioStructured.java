@@ -57,31 +57,31 @@ public class TestScenarioStructured extends initial{
 
     @Test(priority = 5)
     public void GoingToWomen(){
-        driver.findElement(By.xpath("//*[@id=\"block_top_menu\"]/ul/li[1]/a")).click();
+        TestScenarioStructuredMethods.WomenCategoryButton.click();
         Assert.assertTrue(driver.getTitle().contains("Women - My Store"));
     }
 
     @Test(priority = 6)
     public void ChoosingSizeM(){
-        driver.findElement(By.xpath("//*[@id=\"layered_id_attribute_group_2\"]")).click();
-        Assert.assertTrue(driver.findElement(By.xpath("//*[@id=\"layered_id_attribute_group_2\"]")).isSelected());
+        TestScenarioStructuredMethods.SizeMCheckbox.click();
+        Assert.assertTrue(TestScenarioStructuredMethods.SizeMCheckbox.isSelected());
     }
 
     @Test(priority = 7)
     public void GoToTShirts(){
         driver.navigate().back();
-        driver.findElement(By.xpath("//*[@id=\"block_top_menu\"]/ul/li[3]/a")).click();
+        TestScenarioStructuredMethods.TShirtButton.click();
         Assert.assertTrue(driver.getTitle().contains("T-shirts - My Store"));
     }
 
     @Test(priority = 8)
     public void CheckThePriceAndName(){
-        WebElement prize = driver.findElement(By.cssSelector("#center_column > ul > li > div > div.right-block > div.content_price > span"));
-        WebElement name = driver.findElement(By.cssSelector("#center_column > ul > li > div > div.right-block > h5 > a"));
-        prize.getText();
-        name.getText();
-        System.out.println(name.getText());
-        System.out.println(prize.getText());
+        TestScenarioStructuredMethods.waitAndCheckVisibilityOfWebelement(TestScenarioStructuredMethods.Prize);
+        TestScenarioStructuredMethods.waitAndCheckVisibilityOfWebelement(TestScenarioStructuredMethods.Name);
+        TestScenarioStructuredMethods.Prize.getText();
+        TestScenarioStructuredMethods.Name.getText();
+        System.out.println(TestScenarioStructuredMethods.Name.getText());
+        System.out.println(TestScenarioStructuredMethods.Prize.getText());
     }
 
     @Test(priority = 9)
@@ -89,7 +89,7 @@ public class TestScenarioStructured extends initial{
         js.executeScript("window.scrollTo(0,500)");
         builder.moveToElement(TestScenarioStructuredMethods.Cart);
         builder.perform();
-        driver.findElement(By.xpath("//*[@id=\"center_column\"]/ul/li/div/div[2]/div[2]/a[1]")).click();
+        TestScenarioStructuredMethods.AddToCart.click();
         Assert.assertTrue(driver.getPageSource().contains("Product successfully added to your shopping cart"));
         boolean item = driver.getPageSource().contains("There is 1 item in your cart.");
         if (item){
@@ -101,7 +101,7 @@ public class TestScenarioStructured extends initial{
 
     @Test(priority = 10)
     public void CheckingIfProductIsAdded(){
-        gWait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"layer_cart\"]/div[1]/div[2]/div[4]/span/span"))).click();
+        gWait.until(ExpectedConditions.elementToBeClickable(TestScenarioStructuredMethods.ContinueShoppingButton)).click();
         js.executeScript("window.scrollTo(0,-500)");
         builder.moveToElement(TestScenarioStructuredMethods.CartDropDown);
         builder.perform();
@@ -113,11 +113,12 @@ public class TestScenarioStructured extends initial{
         TestScenarioStructuredMethods.ButtonOrderCart.click();
         gWait.until(ExpectedConditions.textToBePresentInElementLocated(By.xpath("//*[@id=\"cart_title\"]"), "SHOPPING-CART SUMMARY"));
         js.executeScript("window.scrollTo(0,500)");
-        driver.findElement(By.xpath("/html/body/div/div[2]/div/div[3]/div/p[2]/a[1]")).click();
+        TestScenarioStructuredMethods.ProceedToCheckoutButton.click();
     }
 
     @Test(priority = 12)
     public void SearchForDress(){
+        TestScenarioStructuredMethods.waitAndCheckVisibilityOfWebelement(TestScenarioStructuredMethods.SearchButton);
         TestScenarioStructuredMethods.SearchBar.clear();
         TestScenarioStructuredMethods.SearchBar.sendKeys("Printed Dress");
         TestScenarioStructuredMethods.SearchButton.click();
