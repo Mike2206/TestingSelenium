@@ -45,7 +45,8 @@ public class TestScenarioStructuredMethods extends initial {
     WebElement WomenCategoryButton;
 
 
-    public boolean test1() {
+
+    public boolean Test1GetTittle() {
       boolean result;
         boolean title = driver.getTitle().contains("My Store");
         if(title){
@@ -53,9 +54,42 @@ public class TestScenarioStructuredMethods extends initial {
         } else {
             result = false;
         }
-
         return result;
     }
+
+    public boolean Test5GetTittle(){
+        boolean result2;
+        boolean tittle2 = driver.getTitle().contains("Women - My Store");
+        if(tittle2) {
+            result2 = true;
+        }  else {
+            result2 = false;
+        }
+        return result2;
+    }
+
+    public boolean Test7GetTittle(){
+        boolean result3;
+        boolean tittle3 = driver.getTitle().contains("T-shirts - My Store");
+        if(tittle3) {
+            result3 = true;
+        }  else {
+            result3 = false;
+        }
+        return result3;
+    }
+
+    public boolean Test9GetTittle(){
+        boolean result4;
+        boolean tittle4 = driver.getPageSource().contains("Product successfully added to your shopping cart");
+        if(tittle4) {
+            result4 = true;
+        }  else {
+            result4 = false;
+        }
+        return result4;
+    }
+
 
     public boolean waitAndCheckVisibilityOfWebelement(WebElement element) {
         try{
