@@ -1,10 +1,13 @@
 package com.mike.selenium;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+
+import java.util.List;
 
 public class TestScenarioStructuredMethods extends initial {
 
@@ -43,53 +46,43 @@ public class TestScenarioStructuredMethods extends initial {
     WebElement SizeMCheckbox;
     @FindBy (xpath = "//*[@id=\"block_top_menu\"]/ul/li[1]/a")
     WebElement WomenCategoryButton;
+    @FindBy (xpath = "//*[@id=\"layer_cart\"]/div[1]/div[1]/h2")
+    WebElement CartFrame;
+    @FindBy (xpath = "//*[@id=\"cart_title\"]")
+    WebElement CartTitle;
 
 
-
-    public boolean Test1GetTittle() {
-      boolean result;
-        boolean title = driver.getTitle().contains("My Store");
-        if(title){
+    public boolean TestTittle(String text){
+        boolean result;
+        boolean tittle = driver.getTitle().contains(text);
+        if(tittle) {
             result = true;
-        } else {
+        }  else {
             result = false;
         }
         return result;
     }
 
-    public boolean Test5GetTittle(){
-        boolean result2;
-        boolean tittle2 = driver.getTitle().contains("Women - My Store");
-        if(tittle2) {
-            result2 = true;
-        }  else {
-            result2 = false;
+    public boolean pageSource(String text){
+        boolean result;
+        boolean source = driver.getPageSource().contains(text);
+        if(source){
+            result = true;
+        }   else {
+            result = false;
         }
-        return result2;
+        return result;
     }
 
-    public boolean Test7GetTittle(){
-        boolean result3;
-        boolean tittle3 = driver.getTitle().contains("T-shirts - My Store");
-        if(tittle3) {
-            result3 = true;
-        }  else {
-            result3 = false;
-        }
-        return result3;
+    public boolean textInElement(WebElement element, String text) {
+        try {
+            gWait.until(ExpectedConditions.textToBePresentInElement(element,text));
+           // gWait.until(ExpectedConditions.textToBePresentInElementLocated(By.xpath("//div"),text)));
+        } catch (TimeoutException e) {
+            System.out.println("Nie udalo sie znalezc elementu w zadanym czasie.");
     }
-
-    public boolean Test9GetTittle(){
-        boolean result4;
-        boolean tittle4 = driver.getPageSource().contains("Product successfully added to your shopping cart");
-        if(tittle4) {
-            result4 = true;
-        }  else {
-            result4 = false;
-        }
-        return result4;
+        return true;
     }
-
 
     public boolean waitAndCheckVisibilityOfWebelement(WebElement element) {
         try{
@@ -111,6 +104,18 @@ public class TestScenarioStructuredMethods extends initial {
     public boolean checkTheLogo() {
 
         return waitAndCheckVisibilityOfWebelement(logo);
+    }
+
+    public void getListOfElementsByProductName() {
+        List<WebElement> listOfElements = driver.findElements(By.xpath("//a[contains(@class,'product-name')]"));
+
+        for(WebElement el : listOfElements) {
+            System.out.println(el.getText());
+        }
+
+        for (int i = 0; i< listOfElements.size();i++){
+            listOfElements.get(i).getAttribute("value");
+        }
     }
 
 }

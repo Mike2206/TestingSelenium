@@ -12,14 +12,12 @@ import org.testng.annotations.Test;
 import java.util.List;
 
 public class TestScenarioStructured extends initial{
-    initial initial;
     TestScenarioStructuredMethods TestScenarioStructuredMethods;
     private Actions builder;
 
     @BeforeSuite
     public void setUpBeforeTestClass() {
-        initial = new initial();
-        initial.invokeBrowser();
+        invokeBrowser();
         builder = new Actions(driver);
         TestScenarioStructuredMethods = new TestScenarioStructuredMethods();
     }
@@ -33,7 +31,8 @@ public class TestScenarioStructured extends initial{
     @Test(priority = 1)
     public void CheckTittle(){
         System.out.println("...Starting Test 1...");
-        Assert.assertTrue(TestScenarioStructuredMethods.Test1GetTittle());
+        TestScenarioStructuredMethods.getListOfElementsByProductName();
+        Assert.assertTrue(TestScenarioStructuredMethods.TestTittle("My Store"));
     }
 
     @Test(priority = 2)
@@ -50,6 +49,14 @@ public class TestScenarioStructured extends initial{
             allLinks.getText();
             System.out.println(allLinks.getText());
         }
+
+      /*  String text = "text do znalezienia";
+        boolean czyZnalezionyText = TestScenarioStructuredMethods.textInElement(TestScenarioStructuredMethods.logo,text);
+        if(czyZnalezionyText){
+            System.out.println("Element " + text + " zostal odnaleziony poprawnie.");
+        } else  {
+            System.out.println("Element " + text + " nie zostal odnaleziony.");
+        }*/
     }
 
     @Test(priority = 4)
@@ -63,7 +70,7 @@ public class TestScenarioStructured extends initial{
     public void GoingToWomen(){
         System.out.println("...Starting Test 5...");
         TestScenarioStructuredMethods.WomenCategoryButton.click();
-        Assert.assertTrue(TestScenarioStructuredMethods.Test5GetTittle());
+        Assert.assertTrue(TestScenarioStructuredMethods.TestTittle("Women - My Store"));
     }
 
     @Test(priority = 6)
@@ -78,7 +85,7 @@ public class TestScenarioStructured extends initial{
         System.out.println("...Starting Test 7...");
         driver.navigate().back();
         TestScenarioStructuredMethods.TShirtButton.click();
-        Assert.assertTrue(TestScenarioStructuredMethods.Test7GetTittle());
+        Assert.assertTrue(TestScenarioStructuredMethods.TestTittle("T-shirts - My Store"));
     }
 
     @Test(priority = 8)
@@ -99,7 +106,8 @@ public class TestScenarioStructured extends initial{
         builder.moveToElement(TestScenarioStructuredMethods.Cart);
         builder.perform();
         TestScenarioStructuredMethods.AddToCart.click();
-        Assert.assertTrue(TestScenarioStructuredMethods.Test9GetTittle());
+        TestScenarioStructuredMethods.waitAndCheckVisibilityOfWebelement(TestScenarioStructuredMethods.CartFrame);
+        Assert.assertTrue(TestScenarioStructuredMethods.textInElement(TestScenarioStructuredMethods.CartFrame,"Product successfully added to your shopping cart"));
         boolean item = driver.getPageSource().contains("There is 1 item in your cart.");
         if (item){
             System.out.println("There is just 1 product in your cart");
@@ -115,14 +123,14 @@ public class TestScenarioStructured extends initial{
         js.executeScript("window.scrollTo(0,-500)");
         builder.moveToElement(TestScenarioStructuredMethods.CartDropDown);
         builder.perform();
-        Assert.assertTrue(driver.getPageSource().contains("Faded Short"));
+        TestScenarioStructuredMethods.pageSource("Faded Short");
     }
 
     @Test(priority = 11)
     public void ProceedToCheckout(){
         System.out.println("...Starting Test 11...");
         TestScenarioStructuredMethods.ButtonOrderCart.click();
-        gWait.until(ExpectedConditions.textToBePresentInElementLocated(By.xpath("//*[@id=\"cart_title\"]"), "SHOPPING-CART SUMMARY"));
+        TestScenarioStructuredMethods.textInElement(TestScenarioStructuredMethods.CartTitle, "SHOPPING-CART SUMMARY");
         js.executeScript("window.scrollTo(0,500)");
         TestScenarioStructuredMethods.ProceedToCheckoutButton.click();
     }
@@ -135,6 +143,6 @@ public class TestScenarioStructured extends initial{
         TestScenarioStructuredMethods.SearchBar.sendKeys("Printed Dress");
         TestScenarioStructuredMethods.SearchButton.click();
         TestScenarioStructuredMethods.DressesCategory.click();
-        Assert.assertTrue(driver.getTitle().contains("Dresses - My Store"));
+        TestScenarioStructuredMethods.TestTittle("Dresses - My Store");
     }
 }
