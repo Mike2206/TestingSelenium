@@ -49,14 +49,6 @@ public class TestScenarioStructured extends initial{
             allLinks.getText();
             System.out.println(allLinks.getText());
         }
-
-      /*  String text = "text do znalezienia";
-        boolean czyZnalezionyText = TestScenarioStructuredMethods.textInElement(TestScenarioStructuredMethods.logo,text);
-        if(czyZnalezionyText){
-            System.out.println("Element " + text + " zostal odnaleziony poprawnie.");
-        } else  {
-            System.out.println("Element " + text + " nie zostal odnaleziony.");
-        }*/
     }
 
     @Test(priority = 4)
