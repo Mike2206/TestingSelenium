@@ -112,7 +112,6 @@ public class TestScenarioStructuredMethods extends initial {
         for(WebElement el : listOfElements) {
             System.out.println(el.getText());
         }
-
         for (int i = 0; i< listOfElements.size();i++){
             listOfElements.get(i).getAttribute("value");
         }
