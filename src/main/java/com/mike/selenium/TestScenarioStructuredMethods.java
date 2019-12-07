@@ -46,7 +46,7 @@ public class TestScenarioStructuredMethods extends initial {
     WebElement SizeMCheckbox;
     @FindBy (xpath = "//*[@id=\"block_top_menu\"]/ul/li[1]/a")
     WebElement WomenCategoryButton;
-    @FindBy (xpath = "//*[@id=\"layer_cart\"]/div[1]/div[1]/h2")
+    @FindBy (xpath = "//div[@class='layer_cart_product col-xs-12 col-md-6']")
     WebElement CartFrame;
     @FindBy (xpath = "//*[@id=\"cart_title\"]")
     WebElement CartTitle;
@@ -54,11 +54,13 @@ public class TestScenarioStructuredMethods extends initial {
 
     public boolean TestTittle(String text){
         boolean result;
-        boolean tittle = driver.getTitle().contains(text);
+        boolean tittle = driver.getTitle().equals(text);
         if(tittle) {
             result = true;
+            System.out.println("Tittle is correct");
         }  else {
             result = false;
+            System.out.println("Tittle is incorrect");
         }
         return result;
     }
@@ -116,5 +118,4 @@ public class TestScenarioStructuredMethods extends initial {
             listOfElements.get(i).getAttribute("value");
         }
     }
-
-}
+    }
